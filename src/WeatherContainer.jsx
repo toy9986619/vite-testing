@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import WeatherComponent from './WeatherComponent';
+import WxItem from './WxItem';
 import { getWeather } from './apiClient';
 
 const WeatherContainer = (props) => {
@@ -20,10 +21,22 @@ const WeatherContainer = (props) => {
     setWeatherData(response.data);
   }, [authorization]);
 
+  const { records = {} } = weatherData;
+  const { datasetDescription, location = [] } = records;
+  const [locationData = {}] = location;
+  const { locationName, weatherElement = [] } = locationData;
+  const wxData = weatherElement.find((data) => data.elementName === 'Wx') || {};
+  const { time: wxTime = [] } = wxData;
+
+  const WxDataList = wxTime.map((data) => <WxItem data={data} />);
+
   return (
     <WeatherComponent
       setAuthorization={onAuthorizationChange}
       onSearchClick={onSearchClick}
+      datasetDescription={datasetDescription}
+      locationName={locationName}
+      WxDataList={WxDataList}
     />
   );
 };

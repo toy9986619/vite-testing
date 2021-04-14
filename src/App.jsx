@@ -1,11 +1,13 @@
-import React, { useState, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import WeatherContainer from './WeatherContainer';
+import AppLayout from './AppLayout';
 
 function App() {
   return (
     <div className="App">
-      <WeatherContainer />
+      <AppLayout>
+        <WeatherContainer />
+      </AppLayout>
     </div>
   );
 }
